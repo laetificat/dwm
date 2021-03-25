@@ -25,9 +25,14 @@ static const char col_green[]       = "#2A9D8F";
 
 /* color mapping */
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_black, col_sandy, col_charcoal },
-	[SchemeSel]  = { col_black, col_sandy, col_burnt },
+	/*                      fg         bg         border   */
+	[SchemeNorm]     = { col_black, col_sandy, col_charcoal },
+	[SchemeSel]      = { col_black, col_sandy, col_burnt    },
+	[SchemeStatus]   = { col_black, col_sandy, col_charcoal }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { col_black, col_burnt, col_charcoal }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm] = { col_black, col_sandy, col_charcoal }, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel]  = { col_black, col_sandy, col_charcoal }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm] = { col_black, col_sandy, col_charcoal }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
@@ -40,7 +45,9 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	/*
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	*/
 };
 
 /* layout(s) */
@@ -69,14 +76,15 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "xfce4-terminal", NULL };
 static const char *chromecmd[]  = { "google-chrome-stable", NULL };
+static const char *firefoxcmd[]  = { "firefox", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,			XK_c,	   spawn,	   {.v = chromecmd } },
+	{ MODKEY,			XK_c,	   spawn,	   {.v = firefoxcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
